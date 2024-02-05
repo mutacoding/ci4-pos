@@ -164,6 +164,8 @@
       </div>
       <div class="modal-body">
         <form id="c_pembayaran" method="post" action="Javascript:Pembayaran();">
+          <input type="text" id="en_faktur" name="en_faktur" value="<?= $faktur; ?>">
+          <input type="text" id="en_tgl" name="en_tgl" value="<?= date("Y-m-d"); ?>">
           <div class="form-group">
             <label for="en_total_bayar">Total Belanja</label>
             <input type="text" class="form-control text-right" id="en_total_belanja" name="en_total_belanja" readonly>
