@@ -361,7 +361,7 @@
       });
     }else{
       $.ajax({
-      url: "<?= base_url(); ?>penjualan/createPenjualan",
+      url: "<?= base_url(); ?>penjualan/createPembayaran",
       type: "post",
       dataType: "json",
       data: $("#c_pembayaran").serialize(),

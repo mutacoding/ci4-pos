@@ -144,13 +144,6 @@ class Penjualan extends BaseController
     return $this->response->setJSON($respon);
   }
 
-  // public function createPenjualan()
-  // {
-  //   $data = [
-
-  //   ];
-  // }
-
   // Delete Data
   public function HapusPenjualan()
   {
@@ -159,5 +152,9 @@ class Penjualan extends BaseController
     $result = $this->detail->deleteData($id);
 
     return $this->response->setJSON($result);
+  }
+
+  public function createPembayaran(){
+
   }
 }
