@@ -30,7 +30,7 @@
           <div class="col-lg-3">
             <div class="form-group">
               <label for="en_faktur">Jam</label>
-              <input class="form-control" id="en_tgl" value="<?= date("H:i:s"); ?>" readonly>
+              <input class="form-control" id="en_jam" value="<?= date("H:i:s"); ?>" readonly>
             </div>
           </div>
           <div class="col-lg-3">
@@ -164,8 +164,7 @@
       </div>
       <div class="modal-body">
         <form id="c_pembayaran" method="post" action="Javascript:Pembayaran();">
-          <input type="text" id="en_faktur" name="en_faktur" value="<?= $faktur; ?>">
-          <input type="text" id="en_tgl" name="en_tgl" value="<?= date("Y-m-d"); ?>">
+          <input type="hidden" id="en_faktur" name="en_faktur" value="<?= $faktur; ?>">
           <div class="form-group">
             <label for="en_total_bayar">Total Belanja</label>
             <input type="text" class="form-control text-right" id="en_total_belanja" name="en_total_belanja" readonly>
@@ -235,6 +234,10 @@
 
   });
 
+  // window.onload = function(){
+  //   jam();
+  // }
+
   function cekKode(){
     let cek_kode = $("#en_kode").val();
     if (cek_kode.length == 0){
@@ -294,6 +297,9 @@
       url: "<?= base_url(); ?>penjualan/TampilPenjualan",
       type: "post",
       dataType: "json",
+      data: {
+        faktur : $("#en_faktur").val(),
+      },
       success: function(respon){
         $("#t_keranjang").html(respon.data);
       }
@@ -368,7 +374,14 @@
       dataType: "json",
       data: $("#c_pembayaran").serialize(),
       success: function(respon){
-        
+        if(respon.status){
+          $("#m_pembayaran").modal("hide");
+          Swal.fire({
+            icon: 'success',
+            text: respon.msg,
+          });
+          window.location.reload();
+        }
       }
     })
     }

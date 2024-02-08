@@ -26,4 +26,12 @@ class DetailModel extends Model
   {
     return $this->select("SUM(total_harga) as total_bayar")->where("no_faktur", $faktur)->get()->getRowArray();
   }
+
+  public function FakturBelanja($no_faktur)
+  {
+    return $this->db->table("tbl_detail_penjualan")
+      ->where("no_faktur", $no_faktur)
+      ->get()
+      ->getResultArray();
+  }
 }

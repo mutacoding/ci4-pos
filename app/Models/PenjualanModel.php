@@ -37,4 +37,8 @@ class PenjualanModel extends Model
       ->get()
       ->getRowArray();
   }
+
+  public function InsertData($data){
+    return $this->db->table("tbl_penjualan")->insert($data);
+  }
 }

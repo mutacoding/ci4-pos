@@ -91,8 +91,8 @@ class Penjualan extends BaseController
 
   public function TampilPenjualan()
   {
-    $kode_produk = $this->request->getPost("en_faktur");
-    $detail_produk = $this->detail->find($kode_produk);
+    $no_faktur = $this->request->getPost("faktur");
+    $detail_produk = $this->detail->FakturBelanja($no_faktur);
     
     $data = "";
     $no = 1;
@@ -155,6 +155,23 @@ class Penjualan extends BaseController
   }
 
   public function createPembayaran(){
-    
+    $data = [
+      'no_faktur' => $this->request->getPost('en_faktur'),
+      'tgl_jual' => date("Y-m-d"),
+      'jam_jual' => date("H:i:s"),
+      'total_harga' => $this->request->getPost('en_total_belanja'),
+      'total_bayar' => $this->request->getPost('en_total_bayar'),
+      'kembalian' => str_replace('.', '', $this->request->getPost('en_sisa_uang')),
+    ];
+    $result = $this->penjualan->insertData($data);
+
+    if ($result){
+      $respon = [
+        "status" => true,
+        "msg" => "Pembayaran Berhasil"
+      ];
+    }
+
+    return $this->response->setJSON($respon);
   }
 }
