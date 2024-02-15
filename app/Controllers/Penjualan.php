@@ -76,6 +76,7 @@ class Penjualan extends BaseController
 
   public function createPenjualan()
   {
+    // Insert Penjualan
     $data = [
       'no_faktur' => $this->request->getPost('en_faktur'),
       'kode_produk' => $this->request->getPost('en_kode'),
@@ -85,6 +86,19 @@ class Penjualan extends BaseController
       'total_harga' => $this->request->getPost('en_qty') * $this->request->getPost('en_harga_jual'),
     ];
     $result = $this->detail->insertData($data);
+
+    if ($result){
+      // Update Stok Produk
+      $kode =  $this->request->getPost('en_kode');
+      $getProduk = $this->produk->getProduct($kode);
+
+      $id = $getProduk['id_produk'];
+
+      $jml_produk = $getProduk['stok_produk'] - $this->request->getPost('en_qty');
+
+      $stok = $jml_produk;
+      $this->produk->updateStok($id, $stok);
+    }
 
     return $this->response->setJSON($result);
   }
@@ -107,12 +121,19 @@ class Penjualan extends BaseController
                     <td>Rp '.number_format($d['harga_jual'], 0, ",", ".").'</td> 
                     <td>Rp '.number_format($d['total_harga'], 0, ",", ".").'</td>
                     <td>
-                      <button class="btn btn-danger" onclick="HapusItem('.$d["id_detail_penjualan"].')"><i class="fa fa-times"></i></button>
+                      <button class="btn btn-danger" onclick="HapusItem('.$d["id_detail_penjualan"].' , '.$d["kode_produk"].' , '.$d["qty"].')"><i class="fa fa-times"></i></button>
                     </td>
                   </tr>
                 ';
         $no++;
       }
+
+      $data .= '
+        <tr>
+          <th colspan="5" class="text-right fw-bold">Total Belanja</th>
+          <th colspan="2" class="fw-bold text-primary" id="total_belanja">Total Belanja</th>
+        </tr>
+      ';
 
       return $this->response->setJSON([
         "status" => true,
@@ -139,6 +160,7 @@ class Penjualan extends BaseController
 
     $respon = [
       "total" => number_format($hasil["total_bayar"], 0, ",", "."),
+      "tot_tabel" => "Rp " .number_format($hasil["total_bayar"], 0, ",", "."),
     ];
 
     return $this->response->setJSON($respon);
@@ -147,10 +169,21 @@ class Penjualan extends BaseController
   // Delete Data
   public function HapusPenjualan()
   {
+    // Delete Keranjang
     $id = $this->request->getPost("id");
-
     $result = $this->detail->deleteData($id);
+    
+    if($result){
+      // Update Stok
+      $kode = $this->request->getPost("kode");
+      $getProduk = $this->produk->getProduct($kode);
 
+      $id_produk =  $getProduk['id_produk'];
+      $jml_produk = $getProduk['stok_produk'] + $this->request->getPost('qty');
+
+      $stok = $jml_produk;
+      $this->produk->updateStok($id_produk, $stok);
+    }
     return $this->response->setJSON($result);
   }
 

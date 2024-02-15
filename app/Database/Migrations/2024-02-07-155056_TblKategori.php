@@ -8,23 +8,23 @@ class TblKategori extends Migration
 {
     public function up()
     {
-        $this->forge->addField([
-			'katid'          => [
+      $this->forge->addField([
+			'id_kategori'          => [
 				'type'           => 'INT',
 				'constraint'     => 11,
 				'auto_increment' => true,
 			],
-			'katnama'       => [
+			'nama_kategori'       => [
 				'type'       => 'VARCHAR',
 				'constraint' => '100',
 			]
 		]);
-		$this->forge->addKey('katid', true);
-		$this->forge->createTable('kategori');
+		$this->forge->addKey('id_kategori', true);
+		$this->forge->createTable('tbl_kategori');
     }
 
     public function down()
     {
-        //
+      $this->forge->dropTable('tbl_kategori');
     }
 }

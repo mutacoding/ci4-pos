@@ -19,6 +19,16 @@ class ProdukModel extends Model
     return $query->getResultArray();
   }
 
+  public function getProduct($kode)
+  {
+    return $this->db->table('tbl_produk')->where('kode_produk', $kode)->get()->getRowArray();
+  }
+
+  public function updateStok($id, $stok)
+  {
+    return $this->db->query("UPDATE tbl_produk SET stok_produk = $stok WHERE id_produk = $id ");
+  }
+
   public function insertData($data)
   {
     return $this->db->table("tbl_produk")->insert($data);

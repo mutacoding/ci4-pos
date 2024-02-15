@@ -11,58 +11,37 @@
 
 <?= $this->section("content"); ?>
 <div class="row">
-  <div class="col-lg-7">
-    <div class="card card-primary card-outline">
-      <div class="card-body p-2">
-        <div class="row">
-          <div class="col-lg-3">
-            <div class="form-group">
-              <label>No Faktur</label>
-              <input type="text" class="form-control text-danger" id="en_faktur" readonly value="<?= $faktur; ?>">
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="form-group">
-              <label for="en_faktur">Tanggal</label>
-              <input type="date" class="form-control" id="en_tgl" value="<?= date("Y-m-d"); ?>" readonly>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="form-group">
-              <label for="en_faktur">Jam</label>
-              <input class="form-control" id="en_jam" value="<?= date("H:i:s"); ?>" readonly>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="form-group">
-              <label for="en_faktur">Kasir</label>
-              <input class="form-control" id="en_tgl" value="<?= "Nama Kasir" ?>" readonly>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-5 col-6">
-    <div class="card card-primary card-outline">
-      <div class="card-header">
-        <h5 class="m-0"></h5>
-      </div>
-      <div class="card-body bg-black">
-        <h4 class="display-5 text-right text-green" id="total_belanja"></h4>
-      </div>
-    </div>
-  </div>
-
-  <!-- Start: Cart section -->
-  <div class="col-lg-12">
+  <div class="col-4">
     <div class="card card-primary card-outline">
       <div class="card-body">
-        <!-- Start : Form Cart -->
         <form id="c_jual" method="post" action="Javascript:TambahBelanja()">
           <div class="row">
-            <div class="col-lg-3">
-              <input type="hidden" id="en_faktur" name="en_faktur" value="<?= $faktur; ?>">
+            <div class="col-6">
+              <div class="form-group">
+                <label>No Faktur</label>
+                <input type="text" class="form-control text-danger" id="en_faktur" name="en_faktur" readonly value="<?= $faktur; ?>">
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="en_faktur">Tanggal</label>
+                <input type="date" class="form-control" id="en_tgl" value="<?= date("Y-m-d"); ?>" readonly>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="en_faktur">Jam</label>
+                <input class="form-control" id="en_jam" value="<?= date("H:i:s"); ?>" readonly>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="en_faktur">Kasir</label>
+                <input class="form-control" id="en_tgl" value="<?= "Nama Kasir" ?>" readonly>
+              </div>
+            </div>
+            <div class="col-6">
+              <label for="en_kode">Kode Produk</label>
               <div class="form-group input-group">
                 <input type="text" class="form-control" id="en_kode" name="en_kode" placeholder="Kode Produk">
                 <span class="input-group-append">
@@ -72,55 +51,54 @@
                 </span>
               </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-6">
               <div class="form-group">
+                <label for="en_nama_produk">Nama Produk</label>
                 <input type="text" class="form-control" id="en_nama_produk" name="en_nama_produk" readonly placeholder="Nama Produk">
               </div>
             </div>
-            <div class="col-lg-1">
+            <div class="col-4">
               <div class="form-group">
+                <label for="en_qty">QTY</label>
                 <input type="number" class="form-control" id="en_qty" name="en_qty" min="1" value="1" placeholder="Qty">
               </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-8">
               <div class="form-group">
+                <label for="en_harga_jual">Harga Produk</label>
                 <input type="text" class="form-control text-rigth" id="en_harga_jual" name="en_harga_jual" readonly placeholder="Harga">
               </div>
             </div>
-            <div class="col-lg-4">
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-cart-plus"></i> Tambah</button>
-                <button type="reset" class="btn btn-warning"><i class="fa fa-sync"></i> Reset</button>
-                <button type="button" class="btn btn-success" id="btn_pembayaran"><i class="fa fa-cash-register"></i> Pembayaran</button>
-              </div>
+            <div class="form-group mt-4 mb-0">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-cart-plus"></i> Tambah</button>
+              <button type="reset" class="btn btn-warning"><i class="fa fa-sync"></i> Reset</button>
+              <button type="button" class="btn btn-success" id="btn_pembayaran"><i class="fa fa-cash-register"></i> Pembayaran</button>
             </div>
           </div>
         </form>
-        <!-- End : Form Cart -->
-        <div class="row">
-          <!-- Start : Table Cart -->
-          <div class="col-lg-12">
-            <table class="table table-bordered table-stripped">
-              <thead>
-                <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">Kode Produk</th>
-                  <th scope="col">Nama Produk</th>
-                  <th scope="col">QTY</th>
-                  <th scope="col">Harga Produk</th>
-                  <th scope="col">Total Harga</th>
-                  <th scope="col">#</th>
-                </tr>
-              </thead>
-              <tbody id="t_keranjang"></tbody>
-            </table>
-          </div>
-          <!-- End : Table Cart -->
-        </div>
       </div>
     </div>
   </div>
-  <!-- End: Cart Section -->
+  <div class="col-8">
+    <div class="card card-primary card-outline">
+      <div class="card-body">
+        <table class="table table-bordered table-stripped">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Kode Produk</th>
+              <th scope="col">Nama Produk</th>
+              <th scope="col">QTY</th>
+              <th scope="col">Harga Produk</th>
+              <th scope="col">Total Harga</th>
+              <th scope="col">#</th>
+            </tr>
+          </thead>
+          <tbody id="t_keranjang"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Start: Modal Product -->
@@ -306,13 +284,15 @@
     })
   }
 
-  function HapusItem(id){
+  function HapusItem(id, kode, qty){
     $.ajax({
       url: "<?= base_url(); ?>penjualan/HapusPenjualan",
       type: "post",
       dataType: "json",
       data: {
-        id : id
+        id : id,
+        kode: kode,
+        qty : qty
       },
       success: function(respon){
         ViewBelanja();
@@ -330,7 +310,7 @@
         no_faktur : $("#en_faktur").val()
       },
       success: function(respon){
-        $("#total_belanja").html(respon.total);
+        $("#total_belanja").html(respon.tot_tabel);
         $("#c_pembayaran #en_total_belanja").val(respon.total);
       }
     })
@@ -379,8 +359,9 @@
           Swal.fire({
             icon: 'success',
             text: respon.msg,
-          });
-          window.location.reload();
+          }).then(function(){
+            window.location.reload();
+          })
         }
       }
     })

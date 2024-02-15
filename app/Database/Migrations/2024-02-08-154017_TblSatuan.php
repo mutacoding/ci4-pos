@@ -4,27 +4,27 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Kategori extends Migration
+class TblSatuan extends Migration
 {
-	public function up()
+    public function up()
 	{
 		$this->forge->addField([
-			'katid'          => [
+			'id_satuan'          => [
 				'type'           => 'INT',
 				'constraint'     => 11,
 				'auto_increment' => true,
 			],
-			'katnama'       => [
+			'nama_satuan'       => [
 				'type'       => 'VARCHAR',
 				'constraint' => '100',
 			]
 		]);
-		$this->forge->addKey('katid', true);
-		$this->forge->createTable('kategori');
+		$this->forge->addKey('id_satuan', true);
+		$this->forge->createTable('tbl_satuan');
 	}
 
 	public function down()
 	{
-		$this->forge->dropTable('kategori');
+		$this->forge->dropTable('tbl_satuan');
 	}
 }
